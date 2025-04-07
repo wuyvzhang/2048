@@ -17,7 +17,7 @@ spec:
         app: play2048
     spec:
       containers:
-        - image: chenzhaoyu94/chatgpt-web
+        - image: openopsrepo.azurecr.io/play2048:${BUILD_NUMBER}
           name: play2048
           imagePullPolicy: Always
           ports:
