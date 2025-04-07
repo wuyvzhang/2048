@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: play2048-deploy
+  labels:
+    app: play2048
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: play2048
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: play2048
+    spec:
+      containers:
+        - image: chenzhaoyu94/chatgpt-web
+          name: play2048
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 300m
+              memory: 300Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: play2048
+  name: play2048-svc
+spec:
+  ports:
+    - name: play2048
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: play2048
+  type: ClusterIP
